@@ -396,12 +396,47 @@ module Console = struct
 
 end
 
+module Dummy_console = struct
+
+  type t = string
+
+  let name t =
+    Name.of_key ("console" ^ t) ~base:"console"
+
+  let module_name t =
+    "Dummy_console"
+
+  let packages _ = [
+    match !mode with
+    | `Unix -> "mirage-console-unix"
+    | `Xen  -> "mirage-console-xen"
+  ]
+
+  let libraries t = packages t
+
+  let configure t =
+    append_main "let %s () =" (name t);
+    append_main "  %s.connect %S" (module_name t) t;
+    newline_main ()
+
+  let clean _ =
+    ()
+
+  let update_path t _ =
+    t
+
+end
+
+
 type console = CONSOLE
 
 let console = Type CONSOLE
 
 let default_console: console impl =
   impl console "0" (module Console)
+
+let dummy_console: console impl =
+  impl console "dummy_console" (module Dummy_console)
 
 let custom_console: string -> console impl =
   fun str ->

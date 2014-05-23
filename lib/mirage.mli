@@ -73,6 +73,7 @@ val default_console: console impl
 val custom_console: string -> console impl
 (** Custom console implementation. *)
 
+val dummy_console: console impl
 
 
 (** {2 Block devices} *)
