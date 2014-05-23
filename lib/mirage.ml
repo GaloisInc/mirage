@@ -1498,8 +1498,8 @@ let configure_makefile t =
       let lib = strip path ^ "/mirage-xen" in
       append oc "\tld -d -nostdlib -m elf_x86_64 -T %s/mirage-x86_64.lds %s/x86_64.o \\\n\
                  \t  _build/main.native.o %s/libocaml.a %s/libxen.a \\\n\
-                 \t  %s/libxencaml.a %s/libdiet.a %s/libm.a %s/longjmp.o -o mir-%s.xen"
-        lib lib lib lib lib lib lib lib t.name;
+                 \t  %s/libxencaml.a %s/libsepol.a %s/libdiet.a %s/libm.a %s/longjmp.o -o mir-%s.xen"
+        lib lib lib lib lib lib lib lib lib t.name;
     | `Unix ->
       append oc "build: main.native";
       append oc "\tln -nfs _build/main.native mir-%s" t.name;
